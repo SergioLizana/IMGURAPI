@@ -52,7 +52,7 @@ class LoginWebViewFragment : Fragment() , LoginCallback{
 
     override fun onResume() {
         super.onResume()
-        activity!!.invalidateOptionsMenu()
+        activity?.invalidateOptionsMenu()
     }
 
     override fun onDetach() {

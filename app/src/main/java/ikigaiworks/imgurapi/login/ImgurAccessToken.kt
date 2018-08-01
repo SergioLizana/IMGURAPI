@@ -8,20 +8,11 @@ import java.util.*
 
 class ImgurAccessToken : Parcelable {
     /**
-     * The access token/authorization token for use with the Imgur API
-     */
-    /**
      * Get the access token/authorization token for use with the Imgur API
      * @return The token/authorization token for use with the Imgur API
      */
     val accessToken: String
 
-    /**
-     * The type of access token that we have.
-     *
-     * The Imgur API supports user-specific tokens using the "Bearer" type and
-     * app-specific token with the "Client-ID" type.
-     */
     /**
      * Get the type of access token that we have.
      *
@@ -33,19 +24,11 @@ class ImgurAccessToken : Parcelable {
     val tokenType: String
 
     /**
-     * The number of seconds (relative to the time it was created) that the token is good for.
-     */
-    /**
      * Life of the token in seconds
      * @return Life of the token in seconds
      */
     val expiresIn: String
 
-    /**
-     * A token that can be used to refresh this access token.
-     *
-     * A refresh token is used to generate a new Access Token with the same permission/scope.
-     */
     /**
      * Get the token that can be used to refresh this access token.
      *
@@ -55,17 +38,11 @@ class ImgurAccessToken : Parcelable {
     val refreshToken: String
 
     /**
-     * The username for the user that logged in.
-     */
-    /**
      * Get the username for the user that logged in.
      * @return Username for the user that logged in
      */
     val accountUsername: String
 
-    /**
-     * The opaque user ID of the user that logged in.
-     */
     /**
      * Get the user ID of the user that logged in.
      * @return User ID of the user that logged in.
@@ -173,83 +150,24 @@ class ImgurAccessToken : Parcelable {
         return result
     }
 
-    /* Parcelable functions */
+    constructor(source: Parcel) : this(
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString()
+    )
 
-    /**
-     * Describe the kinds of special objects contained in this Parcelable instance's marshaled representation.
-     *
-     * We don't have any special objects, so always 0;
-     *
-     * @return Bitmask on special object constants
-     */
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents() = 0
 
-    /**
-     * Flatten this object in to a Parcel.
-     * @param out Parcel to write out to
-     * @param flags Additional flags about how the object should be written
-     */
-    override fun writeToParcel(out: Parcel, flags: Int) {
-        out.writeString(accessToken)
-        out.writeString(tokenType)
-        out.writeString(expiresIn)
-        out.writeString(refreshToken)
-        out.writeString(accountUsername)
-        out.writeString(accountId)
-        out.writeSerializable(created_at)
-    }
-
-    /**
-     * Private constructor for use with a Parcel
-     * @param in The stored Parcel
-     */
-    private constructor(`in`: Parcel) {
-        accessToken = `in`.readString()
-        tokenType = `in`.readString()
-        expiresIn = `in`.readString()
-        refreshToken = `in`.readString()
-        accountUsername = `in`.readString()
-        accountId = `in`.readString()
-        created_at = `in`.readSerializable() as Date
-    }
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {}
 
     companion object {
-
-        /**
-         * Helper function to generate a ImgurAccessToken instance from the URL fragment provided by the API.
-         *
-         * This comes from the App Redirect URL after requesting a "response_type" of "token"
-         * from the Imgur OAuth API.
-         *
-         * @param fragment The "fragment" or "hash" from the app redirect URL that contains the access token information.
-         * @return A ImgurAccessToken instance representing the given access token.
-         */
-        fun parseFromFragment(fragment: String): ImgurAccessToken {
-            val fragmentQuery = Uri.parse("?$fragment")
-
-            val access_token = fragmentQuery.getQueryParameter("access_token")
-            val token_type = fragmentQuery.getQueryParameter("token_type")
-            val expires_in = fragmentQuery.getQueryParameter("expires_in")
-            val refresh_token = fragmentQuery.getQueryParameter("refresh_token")
-            val account_username = fragmentQuery.getQueryParameter("account_username")
-            val account_id = fragmentQuery.getQueryParameter("account_id")
-
-            return ImgurAccessToken(access_token, token_type, expires_in, refresh_token, account_username, account_id)
-        }
-
-        /**
-         * Parcelable creator for ImgurAccessTokens
-         */
+        @JvmField
         val CREATOR: Parcelable.Creator<ImgurAccessToken> = object : Parcelable.Creator<ImgurAccessToken> {
-            override fun createFromParcel(`in`: Parcel): ImgurAccessToken {
-                return ImgurAccessToken(`in`)
-            }
-
-            override fun newArray(size: Int): Array<ImgurAccessToken?> {
-                return arrayOfNulls(size)
-            }
+            override fun createFromParcel(source: Parcel): ImgurAccessToken = ImgurAccessToken(source)
+            override fun newArray(size: Int): Array<ImgurAccessToken?> = arrayOfNulls(size)
         }
     }
 }
