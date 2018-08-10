@@ -2,12 +2,13 @@ package ikigaiworks.imgurapi.login
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import ikigaiworks.imgurapi.R
+import ikigaiworks.imgurapi.api.model.ImgurAccessToken
+import ikigaiworks.imgurapi.api.model.ImgurImage
 import kotlinx.android.synthetic.main.fragment_imgur_webview.*
 
 
@@ -23,6 +24,8 @@ class LoginWebViewFragment : Fragment() , LoginCallback{
     companion object {
         fun newInstance(): LoginWebViewFragment {
             val fragment = LoginWebViewFragment()
+            val image : ImgurImage = ImgurImage()
+
             return fragment
         }
     }

@@ -1,5 +1,7 @@
 package ikigaiworks.imgurapi.login
 
+import ikigaiworks.imgurapi.api.model.ImgurAccessToken
+
 interface LoginCallback {
-    abstract fun OnImgurTokenReceived(accessToken: ImgurAccessToken)
+    fun OnImgurTokenReceived(accessToken: ImgurAccessToken)
 }

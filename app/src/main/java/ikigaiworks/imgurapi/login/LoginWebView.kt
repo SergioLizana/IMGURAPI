@@ -6,7 +6,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.webkit.*
 import ikigaiworks.imgurapi.SECRET_IMGUR_APP_CALLBACK_URL
-import ikigaiworks.imgurapi.SECRET_IMGUR_APP_ID
+import ikigaiworks.imgurapi.api.model.ImgurAccessToken
 
 class LoginWebView : WebViewClient {
 
